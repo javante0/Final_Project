@@ -1,5 +1,4 @@
 import time
-import statistics
 
 #will actually use dictionary from Customer class
 order = {
@@ -40,30 +39,45 @@ def pizza_prep():
         time_score =  5 - ((total_time - 10) / 10)
     
     #accuracy score
+    total_items = 3 + len(order['cheese']) + len(order['toppings'])
+
+    
+    individual_score = 5/total_items
     acc_score = 0
-    cheese_score = 0
-    topping_score = 0
+    c_score = 0
+    s_score = 0
+    sa_score = 0
+    ch_score = 0
+    t_score = 0
+    
     if crust_input.lower() == order['crust'].lower():
-        acc_score += 1
+        acc_score += individual_score
+        c_score += 1
+
     if size_input.lower() == order['size'].lower():
-        acc_score += 1
+        acc_score += individual_score
+        s_score += 1
+
     if sauce_input.lower() == order['sauce'].lower():
-        acc_score += 1
-    for item in cheese_input.strip().split(","):
+        acc_score += individual_score
+        sa_score += 1
+
+    cheese_list = [item.strip().lower() for item in cheese_input.split(",")]
+    for item in cheese_list:
         if item.lower() in {item.lower() for item in order['cheese']}:
-            acc_score += 1/len(order['cheese'])
-            cheese_score += 1
-    for item in toppings_input.strip().split(","):
+            acc_score += individual_score
+            ch_score += 1
+
+    toppings_list = [item.strip().lower() for item in toppings_input.split(",")]
+    for item in toppings_list:
         if item.lower() in {item.lower() for item in order['toppings']}:
-            acc_score += 1/len(order['toppings'])
-            topping_score += 1
+            acc_score += individual_score
+            t_score += 1
     
     total_score = round((time_score + acc_score)/2, 2)
-    print(time_score)
-    print(acc_score)
-    print(cheese_score)
-    print(topping_score)
-    print(f"Your total score is {total_score}/5")
+    print("\n")
+    print(f"You took {total_time} second to prepare the ingredients.")
+    print(f"Your total score is {total_score}/5.0")
     return total_score
 
 pizza_prep()
