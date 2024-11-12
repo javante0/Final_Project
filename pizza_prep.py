@@ -11,6 +11,30 @@ order = {
 }
 
 def pizza_prep():
+    """
+    Mechanism that allows takes a customer's order and prompts the user to type the ingredients included
+    in the order. The user's score for this portion is calculated based on how quickly they type all
+    ingredients and how accurately they type each ingredient.
+
+    Side effects:
+    crust_input: prompts the user to type in the order's crust
+
+    size_input: prompts the user to type in the order's size
+
+    sauce_input: prompts the user to type in the order's sauce
+
+    cheese_input: prompts the user to type in the order's cheese/s
+
+    toppings_input: prompts the user to type in the order's topping/s
+
+    Prints the total time it took for the user to type all ingredients, the user's score based on time,
+    the amount of items the user correctly typed, the user's score based on typing accuracy,
+    and the total score for this section.
+
+    Returns:
+    total_score(float): Value representing the user's score for this section that is calculated by the
+    average of the user's time score and accuracy score.
+    """
     total_items = 3 + len(order['cheese']) + len(order['toppings'])
     allowed_time = total_items * 2
     print(f"Type all ingredients in {allowed_time} seconds or less to receieve a perfect score.")
