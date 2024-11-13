@@ -6,6 +6,9 @@ class InputOutputHandler:
     """
     def calculate_prep_score(self, toppings, ideal_toppings={"pepperoni", "mushrooms", "extra cheese"}):
         """
+        Calculates a preparation score based on the toppings chosen by the chef in 
+        comparison to the ideal toppings.
+        
         Arguments:
             toppings : set
             The toppings selected for the pizza.
