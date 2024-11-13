@@ -87,3 +87,12 @@ class InputOutputHandler:
             return "Bad"
         else:
             return "Terrible"
+handler_test = InputOutputHandler()
+
+prep_score = handler_test.calculate_prep_score({"pepperoni", "mushrooms", "extra cheese"})
+cooking_score = handler_test.cooking_system(11)
+slicing_score = handler_test.slicing_system(7) 
+
+final_rating = handler_test.calculate_final_rating(prep_score, cooking_score, slicing_score)
+print(f"Final Rating: {final_rating}")
+            
