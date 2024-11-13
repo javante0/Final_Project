@@ -20,12 +20,8 @@ class Customer:
         Args: None
         
         Returns:
-            self.order (dict): a dictionary that represents the customer's order. 
-                'name' (str): name of customer
-                'crust' (str): crust of the pizza
-                'cheese' (str): cheese of the pizza
-                'toppings' (list): list of toppings for the pizza
-                'cook_time' (float): the cook time for the pizza in minutes
+            str: The first value in the order dictionary when we iterate over the values. Utilizes fstrings in order to incorporate specific parts of the order in the returned strings
+            
         
         Side Effects:
             Updates self.history by appending generated orders
@@ -76,7 +72,7 @@ class Customer:
                 }
         self.order_history.append(order)
         for step in order.values():
-            print(step)
+            return(step)
         
         
 customer = Customer('Daniel')
