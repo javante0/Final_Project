@@ -72,7 +72,7 @@ class Customer:
                 }
         self.order_history.append(order)
         for step in order.values():
-            return(step)
+            print(step)
         
         
 customer = Customer('Daniel')
