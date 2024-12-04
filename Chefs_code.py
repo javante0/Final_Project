@@ -187,71 +187,58 @@ pizza_prep()
 class InputOutputHandler:
     """
     A class to calculate a final rating for a pizza based on the chef's actions during preparation, cooking, 
-    and slicing stages. Each stage contributes a score, and the final rating is calculated based on the 
-    average of these scores.
-    Methods:
-    - cooking_system(cooking_time, ideal_time=10):
+    and slicing stages. 
+    """
+
+    def cooking_system(self, cooking_time, ideal_time=10):
+        """
         Calculates the cooking score based on the deviation from an ideal cooking time.
         Args:
             cooking_time (float): The actual cooking time for the pizza.
             ideal_time (int, optional): The ideal cooking time (default is 10 minutes).
         Returns:
             int: The cooking score based on the deviation from the ideal time.
-
-    - slicing_system(slices, preferred_slices=8):
-        Calculates the slicing score based on how the number of slices compares to the preferred number.
-        Args:
-            slices (int): The number of slices the pizza was cut into.
-            preferred_slices (int, optional): The preferred number of slices (default is 8).
-        Returns:
-            int: The slicing score based on the difference from the preferred slice count.
-
-    - calculate_final_rating(prep_score, cooking_score, slicing_score, prep_section_score):
-        Computes the final pizza rating based on the average score of preparation, cooking, and slicing stages.
-        Args:
-            prep_score (int): The score for the pizza preparation phase.
-            cooking_score (int): The score for the cooking phase.
-            slicing_score (int): The score for the slicing phase.
-            prep_section_score (int): The score for the preparation section (could be from another process like `pizza_prep`).
-        Returns:
-            str: The final rating for the pizza, which can be one of the following:
-                "Perfect", "Excellent", "Okay", "Bad", or "Terrible".
-
-    - process_order(customer):
-        Handles the pizza order, from generating the order details, processing the preparation, cooking, and slicing stages, 
-        and calculating the final rating for the pizza.
-        Args:
-            customer (Customer): A customer object that generates an order.
-        Side Effects:
-            - Prints the details of the pizza order.
-    """
-
-    def cooking_system(self, cooking_time, ideal_time=10):
+        """
         deviations = list(range(7))  
         score_map = {0: 5, 1: 4, 2: 4, 3: 3, 4: 3, 5: 2, 6: 2}
         cooking_score = score_map.get(min(deviations, key=lambda x: abs(cooking_time - ideal_time - x)), 1)
         return cooking_score
 
     def slicing_system(self, slices, preferred_slices=8):
+        """
+        Calculates the slicing score based on how the number of slices compares to the preferred number.
+        Args:
+            slices (int): The number of slices the pizza was cut into.
+            preferred_slices (int, optional): The preferred number of slices (default is 8).
+        Returns:
+            int: The slicing score based on the difference from the preferred slice count.
+        """
         slice_diffs = {0: 5, 1: 4, 2: 3, 3: 2, 4: 1}
         slice_diff = abs(slices - preferred_slices)
         slicing_score = slice_diffs.get(slice_diff, 1)
         return slicing_score
 
     def calculate_final_rating(self, prep_score, cooking_score, slicing_score, prep_section_score):
+        """
+        Calculates the final pizza rating based on the average score of preparation, cooking, and slicing stages.
+        Args:
+            prep_score (int): The score for the pizza preparation phase.
+            cooking_score (int): The score for the cooking phase.
+            slicing_score (int): The score for the slicing phase.
+            prep_section_score (int): The score for the preparation section.
+        Returns:
+            str: The final rating for the pizza.
+        """
         total_score = prep_score + cooking_score + slicing_score + prep_section_score
         avg_score = total_score / 4
         
-        if avg_score >= 4.5:
-            return "Perfect"
-        elif avg_score >= 3.5:
-            return "Excellent"
-        elif avg_score >= 2.5:
-            return "Okay"
-        elif avg_score >= 1.5:
-            return "Bad"
-        else:
-            return "Terrible"
+        return (
+            "Perfect" if avg_score >= 4.5 else
+            "Excellent" if avg_score >= 3.5 else
+            "Okay" if avg_score >= 2.5 else
+            "Bad" if avg_score >= 1.5 else
+            "Terrible"
+        )
 
     def process_order(self, customer):
         # Generate an order
@@ -268,10 +255,9 @@ class InputOutputHandler:
         slices = len(toppings)  
 
         # Calculate individual scores
-        prep_score = self.calculate_prep_score(toppings)
         cooking_score = self.cooking_system(cook_time)
         slicing_score = self.slicing_system(slices)
 
         # Calculate final rating
-        final_rating = self.calculate_final_rating(prep_score, cooking_score, slicing_score, prep_section_score)
+        final_rating = self.calculate_final_rating(cooking_score, slicing_score, prep_section_score)
         print(f"\nFinal Rating for {order['name']}: {final_rating}")
