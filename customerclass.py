@@ -9,6 +9,7 @@ class Customer:
         self.cheese_options = ['mozzarella', 'cheddar', 'parmesan']
         self.toppings = ['pepperoni', 'mushroom', 'onion', 'olive', 'pineapple', 'sausage', 'bacon', 'anchovy', 'spinach']
         self.size = ['small', 'medium', 'large']
+        # sets the probabilities for all following toppings equally per topping
         for topping in self.toppings:
             self.probability_chain[topping] = {}
             for next_topping in self.toppings:
@@ -40,6 +41,7 @@ class Customer:
                 
         for topping in range(num_toppings):
             selected_toppings.append(first_topping)
+            # first topping chosen randomly, subsequent toppings chosen based on probability
             next_topping = random.choices(
                 self.toppings,
                 weights = [self.probability_chain[first_topping][t] for t in self.toppings])[0]
@@ -47,11 +49,15 @@ class Customer:
                 
         for topping in range(len(selected_toppings) - 1):
             current = selected_toppings[topping]
+            #gets the next following topping
             next_item = selected_toppings[topping + 1]
+            # checks if the topping pair exists already. if not it adds it with count of 0
             if next_item not in self.probability_chain[current]:
                 self.probability_chain[current][next_item] = 0
+            #adds the pair count by 1 
             self.probability_chain[current][next_item] += 1
                 
+        # updating the topping probabilities based on the generated order
         for topping, transitions in self.probability_chain.items():
             total = sum(transitions.values())
             for next_topping in transitions:
