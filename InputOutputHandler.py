@@ -9,11 +9,6 @@ class InputOutputHandler:
     average of these scores.
     """
 
-    def calculate_prep_score(self, toppings, ideal_toppings={"pepperoni", "mushrooms", "extra cheese"}):
-        matching_toppings = ideal_toppings & toppings
-        prep_score = min(5, max(1, int(5 * (len(matching_toppings) / len(ideal_toppings)))))
-        return prep_score
-
     def cooking_system(self, cooking_time, ideal_time=10):
         deviations = list(range(7))  
         score_map = {0: 5, 1: 4, 2: 4, 3: 3, 4: 3, 5: 2, 6: 2}
