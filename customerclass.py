@@ -8,6 +8,7 @@ class Customer:
         self.crust_options = ['thin', 'thick', 'stuffed']
         self.cheese_options = ['mozzarella', 'cheddar', 'parmesan']
         self.toppings = ['pepperoni', 'mushroom', 'onion', 'olive', 'pineapple', 'sausage', 'bacon', 'anchovy', 'spinach']
+        self.size = ['small', 'medium', 'large']
         for topping in self.toppings:
             self.probability_chain[topping] = {}
             for next_topping in self.toppings:
@@ -35,6 +36,7 @@ class Customer:
         selected_toppings = []
         num_toppings = random.randint(2, 5)
         first_topping = random.choice(self.toppings)
+        size = random.choice(self.size)
                 
         for topping in range(num_toppings):
             selected_toppings.append(first_topping)
@@ -64,6 +66,7 @@ class Customer:
                 'separator1': "---------------------------------",
                 'name': f"{self.name}'s ORDER",
                 'separator2': "---------------------------------",
+                'size': f"{size}",
                 'crust': f"{crust_type} crust",
                 'cheese': f"{cheese_type} cheese",
                 'toppings': f"Ingredients: {selected_toppings}",
