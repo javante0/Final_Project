@@ -189,6 +189,41 @@ class InputOutputHandler:
     A class to calculate a final rating for a pizza based on the chef's actions during preparation, cooking, 
     and slicing stages. Each stage contributes a score, and the final rating is calculated based on the 
     average of these scores.
+    Methods:
+    - cooking_system(cooking_time, ideal_time=10):
+        Calculates the cooking score based on the deviation from an ideal cooking time.
+        Args:
+            cooking_time (float): The actual cooking time for the pizza.
+            ideal_time (int, optional): The ideal cooking time (default is 10 minutes).
+        Returns:
+            int: The cooking score based on the deviation from the ideal time.
+
+    - slicing_system(slices, preferred_slices=8):
+        Calculates the slicing score based on how the number of slices compares to the preferred number.
+        Args:
+            slices (int): The number of slices the pizza was cut into.
+            preferred_slices (int, optional): The preferred number of slices (default is 8).
+        Returns:
+            int: The slicing score based on the difference from the preferred slice count.
+
+    - calculate_final_rating(prep_score, cooking_score, slicing_score, prep_section_score):
+        Computes the final pizza rating based on the average score of preparation, cooking, and slicing stages.
+        Args:
+            prep_score (int): The score for the pizza preparation phase.
+            cooking_score (int): The score for the cooking phase.
+            slicing_score (int): The score for the slicing phase.
+            prep_section_score (int): The score for the preparation section (could be from another process like `pizza_prep`).
+        Returns:
+            str: The final rating for the pizza, which can be one of the following:
+                "Perfect", "Excellent", "Okay", "Bad", or "Terrible".
+
+    - process_order(customer):
+        Handles the pizza order, from generating the order details, processing the preparation, cooking, and slicing stages, 
+        and calculating the final rating for the pizza.
+        Args:
+            customer (Customer): A customer object that generates an order.
+        Side Effects:
+            - Prints the details of the pizza order.
     """
 
     def cooking_system(self, cooking_time, ideal_time=10):
