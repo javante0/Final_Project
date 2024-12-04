@@ -81,7 +81,7 @@ customer.generate_order()
 
 order = {
             'name': "John",
-            'crust': "Cheesy",
+            'crust': "Thick",
             'size': "Large",
             'sauce': "Marinara",
             'cheese': {"Cheddar"},
