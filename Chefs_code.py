@@ -81,7 +81,7 @@ customer.generate_order()
 
 order = {
             'name': "John",
-            'crust': "Cheesy",
+            'crust': "Thick",
             'size': "Large",
             'sauce': "Marinara",
             'cheese': {"Cheddar"},
@@ -190,11 +190,6 @@ class InputOutputHandler:
     and slicing stages. Each stage contributes a score, and the final rating is calculated based on the 
     average of these scores.
     """
-
-    def calculate_prep_score(self, toppings, ideal_toppings={"pepperoni", "mushrooms", "extra cheese"}):
-        matching_toppings = ideal_toppings & toppings
-        prep_score = min(5, max(1, int(5 * (len(matching_toppings) / len(ideal_toppings)))))
-        return prep_score
 
     def cooking_system(self, cooking_time, ideal_time=10):
         deviations = list(range(7))  

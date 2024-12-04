@@ -3,7 +3,7 @@ import time
 #will actually use dictionary from Customer class
 order = {
             'name': "John",
-            'crust': "Cheesy",
+            'crust': "Thick",
             'size': "Large",
             'sauce': "Marinara",
             'cheese': {"Cheddar"},
