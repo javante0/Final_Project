@@ -45,11 +45,6 @@ class Customer:
             total = sum(transitions.values())
             for next_topping in transitions:
                 transitions[next_topping] /= total
-                
-        self.cook_time = 6
-        self.cook_time += 1.5 if self.crust_type == 'stuffed' else 1 if self.crust_type == 'thick' else 0
-        self.cook_time += len(self.selected_toppings) * 0.6
-        self.cook_time = round(self.cook_time, 1)
 
         order = {
                 'name': self.name,
@@ -58,7 +53,6 @@ class Customer:
                 'sauce': self.sauce_type,
                 'cheese': self.cheese_type,
                 'toppings': self.selected_toppings,
-                'cook_time': self.cook_time
         }
         self.order_history.append(order)
         return order
@@ -73,7 +67,6 @@ class Customer:
                 'sauce': f"Sauce: {self.sauce_type}",
                 'cheese': f"Cheese: {self.cheese_type}",
                 'toppings': f"Ingredients: {self.selected_toppings}",
-                'cook_time': f"Cook for {self.cook_time} minutes",
                 'separator3': "---------------------------------"
                 }
         
@@ -84,6 +77,7 @@ def pizza_prep(order):
     total_items = 4 + len(order['toppings'])
     allowed_time = total_items * 2
     print(f"Type all ingredients in {allowed_time} seconds or less to receive a perfect score.")
+    print("Toppings should be seperated by commas. Capitilization does not matter.")
     buffer = input("\nPress the enter key to continue.")
     print("Starting in 3...")
     time.sleep(1)
