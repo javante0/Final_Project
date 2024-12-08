@@ -84,6 +84,7 @@ def pizza_prep(order):
     total_items = 4 + len(order['toppings'])
     allowed_time = total_items * 2
     print(f"Type all ingredients in {allowed_time} seconds or less to receive a perfect score.")
+    buffer = input("\nPress the enter key to continue.")
     print("Starting in 3...")
     time.sleep(1)
     print("2...")
@@ -134,9 +135,9 @@ def pizza_prep(order):
     total_score = round((time_score + acc_score) / 2, 2)
     print("\n")
     print(f"You took {total_time} seconds to prepare the ingredients.")
-    print(f"Time score: {time_score}/5.0")
+    print(f"Time score: {round(time_score,2)}/5.0")
     print(f"You correctly prepared {correct_items} items out of {total_items}.")
-    print(f"Accuracy score: {acc_score}/5.0")
+    print(f"Accuracy score: {round(acc_score,2)}/5.0")
     print(f"Your total score is {total_score}/5.0")
     return total_score
 
@@ -148,6 +149,7 @@ class InputOutputHandler:
     def welcome_message(self):
         print("\nWelcome to the Pizza Game!")
         print(f"Hello, {self.customer_name}! Ready to show off your pizza skills?")
+        time.sleep(2)
 
     def explain_rules(self):
         print("\n--- Game Rules ---")
@@ -155,8 +157,8 @@ class InputOutputHandler:
         print("2. After preparation, you will choose how long to cook the pizza.")
         print("3. Finally, you will decide how many slices to cut the pizza into.")
         print("4. Your performance will be scored in each stage. Try to get a 'Perfect' rating!")
-    # Sorry Dan, gotta use this
-        #Prep score for number of toppings
+        buffer = input("\nPress the enter key to continue.")
+
     def calculate_prep_score(self, toppings_set):
         max_toppings_score = 5
         num_toppings = len(toppings_set)
@@ -175,9 +177,9 @@ class InputOutputHandler:
         slicing_score = slice_diffs.get(slice_diff, 1)
         return slicing_score
 
-    def calculate_final_rating(self, prep_score, cooking_score, slicing_score, prep_section_score):
-        total_score = prep_score + cooking_score + slicing_score + prep_section_score
-        avg_score = total_score / 4
+    def calculate_final_rating(self, prep_score, cooking_score, slicing_score):
+        total_score = cooking_score + slicing_score + prep_score
+        avg_score = total_score / 3
         return (
             "Perfect" if avg_score >= 4.5 else
             "Excellent" if avg_score >= 3.5 else
@@ -197,10 +199,7 @@ class InputOutputHandler:
 
         # Run pizza preparation
         print("\nTime to prep the pizza!")
-        prep_section_score = pizza_prep(order)
-
-        # Calculate preparation score based on toppings
-        prep_score = self.calculate_prep_score(set(order['toppings']))
+        prep_score = pizza_prep(order)
 
         # Ask user for cooking time
         try:
@@ -227,7 +226,6 @@ class InputOutputHandler:
             prep_score, 
             cooking_score, 
             slicing_score, 
-            prep_section_score
         )
 
         # Print all scores and the final rating
@@ -235,7 +233,6 @@ class InputOutputHandler:
         print(f"Preparation Score: {prep_score}/5")
         print(f"Cooking Score: {cooking_score}/5")
         print(f"Slicing Score: {slicing_score}/5")
-        print(f"Prep Section Score: {prep_section_score}/5")
         print(f"\nFinal Rating for {order['name']}: {final_rating}")
         
     #this part sucked to firgure out
