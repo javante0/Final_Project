@@ -134,15 +134,15 @@ class InputOutputHandler:
         print(f"Ideal cooking time: {ideal_cooking_time} minutes")
         print(f"Preferred number of slices: {preferred_slices}")
 
-        # Run pizza preparation
+        
         print("\nTime to prep the pizza!")
-        #Relies on the pizza_prep function in John's part of the code
+        
         prep_section_score = pizza_prep(order)
 
-        # Calculate preparation score based on toppings
+        
         prep_score = self.calculate_prep_score(set(order['toppings']))
 
-        # Ask user for cooking time
+        
         try:
             cooking_time = float(input("How many minutes do you want to cook the pizza? "))
         except ValueError:
@@ -152,7 +152,7 @@ class InputOutputHandler:
 
         cooking_score = self.cooking_system(cooking_time, ideal_cooking_time)
 
-        # slicing score
+       
         try:
             slices = int(input("How many slices was the pizza cut into? "))
         except ValueError:
@@ -178,8 +178,28 @@ class InputOutputHandler:
         print(f"Prep Section Score: {prep_section_score}/5")
         print(f"\nFinal Rating for {order['name']}: {final_rating}")
         
-    #this part sucked to firgure out
+   
     def run(self, customer):
+        """
+            Runs the Game for a given customer, allowing multiple play-throughs. 
+        This method takes control of the game flow by:
+    1. Displaying a welcome message
+    2. Explaining game rules
+    3. Processing a pizza order
+    4. Allowing the user to play multiple times
+
+    Args:
+        customer (Customer): A Customer object representing the player
+
+    Side Effects:
+        - Prints welcome and rules messages
+        - Processes pizza orders
+        - Prompts user for continuation
+        - Prints final farewell message
+
+    Returns:
+        None
+        """
         self.welcome_message()
         self.explain_rules()
         play_again = True
@@ -190,16 +210,28 @@ class InputOutputHandler:
                 play_again = False
                 print("\nThank you for playing our Pizza Game! See ya!")
 
-    #This part sucked even more as I testing it in juptyer notebook
 def parse_args(arglist):
-        """Parses command-line arguments for the Pizza Game."""
+       """
+        Parses command-line arguments for the Game.
+
+    Uses argparse to handle user name input when launching the game.
+
+    Args:
+        arglist (list): A list of command-line arguments, typically sys.argv[1:]
+
+    Returns:
+        argparse.Namespace: An object containing parsed arguments, 
+                            with 'name' attribute representing the player's name
+
+    Raises:
+        argparse.ArgumentError: If required arguments are missing or invalid
+    """
         parser = argparse.ArgumentParser(description="Pizza Game Input Handler")
         parser.add_argument("name", type=str, help="Your name")
         return parser.parse_args(arglist)
 
 if __name__ == "__main__":
 
-    # Parse command-line arguments
         args = parse_args(sys.argv[1:])
 
         customer = Customer(args.name)
