@@ -248,6 +248,7 @@ def pizza_prep(order):
 
 class InputOutputHandler:
     """
+    Primary Author:Terrence
     Handles input and output for the Pizza Game, scoring, and user interactions. Also asks if the player wants to play again.
 
     Note: This class depends on outside components:
@@ -259,6 +260,7 @@ class InputOutputHandler:
 
     def welcome_message(self):
         """
+        Primary Author:Terrence
         Displays a welcome message to the player.
 
         Side Effects:
@@ -271,6 +273,8 @@ class InputOutputHandler:
 
     def explain_rules(self):
         """
+        Primary Author:Terrence
+        
         Prints out the rules of the Game.
 
         Side Effects:
@@ -285,6 +289,7 @@ class InputOutputHandler:
 
     def cooking_system(self, cooking_time, ideal_time):
         """
+        Primary Author:Terrence
         Evaluates the cooking time against an ideal cooking time.
 
         Args:
@@ -308,6 +313,7 @@ class InputOutputHandler:
 
     def slicing_system(self, slices, preferred_slices):
         """
+        Primary Author:Terrence
             Evaluates the number of pizza slices against preferred slice count.
 
         Args:
@@ -351,6 +357,7 @@ class InputOutputHandler:
 
     def process_order(self, customer):
         """
+        Primary Author:Terrence
         Processes a complete pizza order, managing all stages of pizza creation.
 
         Arguments:
@@ -415,7 +422,8 @@ class InputOutputHandler:
 
     def run(self, customer):
         """
-            Runs the Game for a given customer, allowing multiple play-throughs. 
+        Primary Author: Terrence
+        Runs the Game for a given customer, allowing multiple play-throughs. 
         This method takes control of the game flow by:
     1. Displaying a welcome message
     2. Explaining game rules
@@ -445,7 +453,13 @@ class InputOutputHandler:
                 print("\nThank you for playing our Pizza Game! See ya!")
     
 def parse_args(arglist):
-        """Parses command-line arguments for the Pizza Game."""
+        """
+        Primary Author:Terrence
+        Technique:
+            ArgumentParser
+            
+            Parses command-line arguments for the Pizza Game.
+        """
         parser = argparse.ArgumentParser(description="Pizza Game Input Handler")
         parser.add_argument("name", type=str, help="Your name")
         return parser.parse_args(arglist)
@@ -460,5 +474,4 @@ if __name__ == "__main__":
         handler = InputOutputHandler()
         handler.customer_name = args.name
 
-    # Run the game
         handler.run(customer)
