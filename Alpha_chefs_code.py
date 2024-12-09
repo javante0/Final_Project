@@ -154,11 +154,6 @@ class InputOutputHandler:
         print("4. Your performance will be scored in each stage. Try to get a 'Perfect' rating!")
         buffer = input("\nPress the enter key to continue.")
 
-    def calculate_prep_score(self, toppings_set):
-        max_toppings_score = 5
-        num_toppings = len(toppings_set)
-        return min(num_toppings, max_toppings_score)
-
     def cooking_system(self, cooking_time, ideal_time):
         deviations = list(range(7))
         score_map = {0: 5, 1: 4, 2: 4, 3: 3, 4: 3, 5: 2, 6: 2}
@@ -223,12 +218,15 @@ class InputOutputHandler:
             slicing_score, 
         )
 
+        final_score = round((prep_score + cooking_score + slicing_score) / 3, 2)
+
         # Print all scores and the final rating
         print("\n--- Score Breakdown ---")
         print(f"Preparation Score: {prep_score}/5")
         print(f"Cooking Score: {cooking_score}/5")
         print(f"Slicing Score: {slicing_score}/5")
-        print(f"\nFinal Rating for {order['name']}: {final_rating}")
+        print(f"\nFinal Rating for {order['name']}: {final_score}/5 \
+              \n{final_rating}!")
         
     #this part sucked to firgure out
     def run(self, customer):
