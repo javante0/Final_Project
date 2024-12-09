@@ -2,6 +2,7 @@ import argparse
 from collections import defaultdict
 import time
 import random
+import sys
 
 class Customer:
     def __init__(self, name):
