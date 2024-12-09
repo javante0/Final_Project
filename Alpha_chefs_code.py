@@ -240,18 +240,21 @@ class InputOutputHandler:
             if user_input != "yes":
                 play_again = False
                 print("\nThank you for playing our Pizza Game! See ya!")
+    
+def parse_args(arglist):
+        """Parses command-line arguments for the Pizza Game."""
+        parser = argparse.ArgumentParser(description="Pizza Game Input Handler")
+        parser.add_argument("name", type=str, help="Your name")
+        return parser.parse_args(arglist)
 
     #This part sucked even more as I testing it in juptyer notebook
 if __name__ == "__main__":
-        # Standard argparse for command-line usage
-        parser = argparse.ArgumentParser(description="Pizza Game Input Handler")
-        parser.add_argument("name", type=str, help="Your name")
-        args = parser.parse_args()
 
+    # Parse command-line arguments
+        args = parse_args(sys.argv[1:])
 
         customer = Customer(args.name)
 
-    
         handler = InputOutputHandler()
         handler.customer_name = args.name
 
