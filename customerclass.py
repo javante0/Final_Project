@@ -14,6 +14,20 @@ class Customer:
             self.probability_chain[topping] = {}
             for next_topping in self.toppings:
                 self.probability_chain[topping][next_topping] = 1 / len(self.toppings)
+    
+    def __str__(self):
+        if not self.order_history:
+            return f"Customer: {self.name} has not placed any orders yet."
+        last_order = self.order_history[-1]
+        return (
+            f"Customer: {self.name}\n"
+            f"Most Recent Order:\n"
+            f" - Size: {last_order['size']}\n"
+            f" - Crust: {last_order['crust']}\n"
+            f" - Cheese: {last_order['cheese']}\n"
+            f" - Toppings: {last_order['toppings']}\n"
+            f" - Cook Time: {last_order['cook_time']}"
+        )
 
     def generate_order(self):
         """
@@ -69,20 +83,19 @@ class Customer:
         cook_time = round(cook_time, 1)
 
         order = {
-                'separator1': "---------------------------------",
-                'name': f"{self.name}'s ORDER",
-                'separator2': "---------------------------------",
-                'size': f"{size}",
-                'crust': f"{crust_type} crust",
-                'cheese': f"{cheese_type} cheese",
-                'toppings': f"Ingredients: {selected_toppings}",
-                'cook_time': f"Cook for {cook_time} minutes",
-                'separator3': "---------------------------------"
+                'name': self.name,
+                'size': size,
+                'crust': crust_type,
+                'cheese': cheese_type,
+                'toppings': selected_toppings,
+                'cook_time': cook_time,
                 }
         self.order_history.append(order)
         for step in order.values():
-            print(step)
+            return(step)
+
         
         
 customer = Customer('Daniel')
 customer.generate_order()
+print(customer)
