@@ -8,6 +8,8 @@ class Customer:
         self.order_history = []
         self.probability_chain = {}
         self.crust_options = ['thin', 'thick', 'stuffed']
+        self.size_options = ['small', 'medium', 'large']
+        self.sauce_options = ['marinara', 'buffalo', 'barbeque', 'pesto']
         self.cheese_options = ['mozzarella', 'cheddar', 'parmesan']
         self.toppings = ['pepperoni', 'mushroom', 'onion', 'olive', 'pineapple', 'sausage', 'bacon', 'anchovy', 'spinach']
         for topping in self.toppings:
@@ -32,22 +34,24 @@ class Customer:
         Raises:
             None
         """  
-        crust_type = random.choice(self.crust_options)
-        cheese_type = random.choice(self.cheese_options)
-        selected_toppings = []
+        self.crust_type = random.choice(self.crust_options)
+        self.size_type = random.choice(self.size_options)
+        self.sauce_type = random.choice(self.sauce_options)
+        self.cheese_type = random.choice(self.cheese_options)
+        self.selected_toppings = []
         num_toppings = random.randint(2, 5)
         first_topping = random.choice(self.toppings)
                 
         for topping in range(num_toppings):
-            selected_toppings.append(first_topping)
+            self.selected_toppings.append(first_topping)
             next_topping = random.choices(
                 self.toppings,
                 weights = [self.probability_chain[first_topping][t] for t in self.toppings])[0]
             first_topping = next_topping
                 
-        for topping in range(len(selected_toppings) - 1):
-            current = selected_toppings[topping]
-            next_item = selected_toppings[topping + 1]
+        for topping in range(len(self.selected_toppings) - 1):
+            current = self.selected_toppings[topping]
+            next_item = self.selected_toppings[topping + 1]
             if next_item not in self.probability_chain[current]:
                 self.probability_chain[current][next_item] = 0
             self.probability_chain[current][next_item] += 1
@@ -57,36 +61,43 @@ class Customer:
             for next_topping in transitions:
                 transitions[next_topping] /= total
                 
-        cook_time = 6
-        cook_time += 1.5 if crust_type == 'stuffed' else 1 if crust_type == 'thick' else 0
-        cook_time += len(selected_toppings) * 0.6
-        cook_time = round(cook_time, 1)
+        self.cook_time = 6
+        self.cook_time += 1.5 if self.crust_type == 'stuffed' else 1 if self.crust_type == 'thick' else 0
+        self.cook_time += len(self.selected_toppings) * 0.6
+        self.cook_time = round(self.cook_time, 1)
 
         order = {
+                'name': self.name,
+                'crust': self.crust_type,
+                'size': self.size_type,
+                'sauce': self.sauce_type,
+                'cheese': self.cheese_type,
+                'toppings': self.selected_toppings,
+                'cook_time': self.cook_time
+        }
+        self.order_history.append(order)
+        return order
+        
+    def __str__(self):
+        ticket = {
                 'separator1': "---------------------------------",
                 'name': f"{self.name}'s ORDER",
                 'separator2': "---------------------------------",
-                'crust': f"{crust_type} crust",
-                'cheese': f"{cheese_type} cheese",
-                'toppings': f"Ingredients: {selected_toppings}",
-                'cook_time': f"Cook for {cook_time} minutes",
+                'crust': f"Crust: {self.crust_type}",
+                'size': f"Size: {self.size_type}",
+                'sauce': f"Sauce: {self.sauce_type}",
+                'cheese': f"Cheese: {self.cheese_type}",
+                'toppings': f"Ingredients: {self.selected_toppings}",
+                'cook_time': f"Cook for {self.cook_time} minutes",
                 'separator3': "---------------------------------"
                 }
-        self.order_history.append(order)
-        for step in order.values():
-            return(step)
+        
+        return "\n".join(ticket.values())
+
 
 customer = Customer('Daniel')
-customer.generate_order()
-
-order = {
-            'name': "John",
-            'crust': "Thick",
-            'size': "Large",
-            'sauce': "Marinara",
-            'cheese': {"Cheddar"},
-            'toppings': {"Pepperoni", "Bacon"},
-}
+customer_order = customer.generate_order()
+print(customer)
 
 def pizza_prep():
     """
@@ -113,10 +124,9 @@ def pizza_prep():
     total_score(float): Value representing the user's score for this section that is calculated by the
     average of the user's time score and accuracy score.
     """
-    total_items = 3 + len(order['cheese']) + len(order['toppings'])
+    total_items = 4 + len(customer_order['toppings'])
     allowed_time = total_items * 2
     print(f"Type all ingredients in {allowed_time} seconds or less to receieve a perfect score.")
-    print(f"{order}")
     print("Starting in 3...")
     time.sleep(1)
     print("2...")
@@ -139,7 +149,7 @@ def pizza_prep():
     
     #time score
     if total_time <= allowed_time:
-        time_score = 5
+        time_score = 5.0
     else:
         # Deducts 0.1 points for each second over allowed time
         time_score =  round(5 - ((total_time - allowed_time) / 10), 2)
@@ -149,27 +159,25 @@ def pizza_prep():
     acc_score = 0
     correct_items = 0
     
-    if crust_input.lower() == order['crust'].lower():
+    if crust_input.lower() == customer_order.get('crust').lower():
         acc_score += individual_score
         correct_items += 1
 
-    if size_input.lower() == order['size'].lower():
+    if size_input.lower() == customer_order.get('size').lower():
         acc_score += individual_score
         correct_items += 1
 
-    if sauce_input.lower() == order['sauce'].lower():
+    if sauce_input.lower() == customer_order.get('sauce').lower():
         acc_score += individual_score
         correct_items += 1
 
-    cheese_list = [item.strip().lower() for item in cheese_input.split(",")]
-    for item in cheese_list:
-        if item.lower() in {item.lower() for item in order['cheese']}:
-            acc_score += individual_score
-            correct_items += 1
+    if cheese_input.lower() == customer_order.get('cheese').lower():
+        acc_score += individual_score
+        correct_items += 1
 
     toppings_list = [item.strip().lower() for item in toppings_input.split(",")]
     for item in toppings_list:
-        if item.lower() in {item.lower() for item in order['toppings']}:
+        if item.lower() in {item.lower() for item in customer_order.get('toppings')}:
             acc_score += individual_score
             correct_items += 1
     
@@ -187,36 +195,58 @@ pizza_prep()
 class InputOutputHandler:
     """
     A class to calculate a final rating for a pizza based on the chef's actions during preparation, cooking, 
-    and slicing stages. Each stage contributes a score, and the final rating is calculated based on the 
-    average of these scores.
+    and slicing stages. 
     """
 
     def cooking_system(self, cooking_time, ideal_time=10):
+        """
+        Calculates the cooking score based on the deviation from an ideal cooking time.
+        Args:
+            cooking_time (float): The actual cooking time for the pizza.
+            ideal_time (int, optional): The ideal cooking time (default is 10 minutes).
+        Returns:
+            int: The cooking score based on the deviation from the ideal time.
+        """
         deviations = list(range(7))  
         score_map = {0: 5, 1: 4, 2: 4, 3: 3, 4: 3, 5: 2, 6: 2}
         cooking_score = score_map.get(min(deviations, key=lambda x: abs(cooking_time - ideal_time - x)), 1)
         return cooking_score
 
     def slicing_system(self, slices, preferred_slices=8):
+        """
+        Calculates the slicing score based on how the number of slices compares to the preferred number.
+        Args:
+            slices (int): The number of slices the pizza was cut into.
+            preferred_slices (int, optional): The preferred number of slices (default is 8).
+        Returns:
+            int: The slicing score based on the difference from the preferred slice count.
+        """
         slice_diffs = {0: 5, 1: 4, 2: 3, 3: 2, 4: 1}
         slice_diff = abs(slices - preferred_slices)
         slicing_score = slice_diffs.get(slice_diff, 1)
         return slicing_score
 
     def calculate_final_rating(self, prep_score, cooking_score, slicing_score, prep_section_score):
+        """
+        Calculates the final pizza rating based on the average score of preparation, cooking, and slicing stages.
+        Args:
+            prep_score (int): The score for the pizza preparation phase.
+            cooking_score (int): The score for the cooking phase.
+            slicing_score (int): The score for the slicing phase.
+            prep_section_score (int): The score for the preparation section.
+        Returns:
+            str: The final rating for the pizza.
+        """
         total_score = prep_score + cooking_score + slicing_score + prep_section_score
         avg_score = total_score / 4
         
-        if avg_score >= 4.5:
-            return "Perfect"
-        elif avg_score >= 3.5:
-            return "Excellent"
-        elif avg_score >= 2.5:
-            return "Okay"
-        elif avg_score >= 1.5:
-            return "Bad"
-        else:
-            return "Terrible"
+        return (
+            "Perfect" if avg_score >= 4.5 else
+            "Excellent" if avg_score >= 3.5 else
+            "Okay" if avg_score >= 2.5 else
+            "Bad" if avg_score >= 1.5 else
+            "Terrible"
+        )
 
     def process_order(self, customer):
         # Generate an order
@@ -233,10 +263,9 @@ class InputOutputHandler:
         slices = len(toppings)  
 
         # Calculate individual scores
-        prep_score = self.calculate_prep_score(toppings)
         cooking_score = self.cooking_system(cook_time)
         slicing_score = self.slicing_system(slices)
 
         # Calculate final rating
-        final_rating = self.calculate_final_rating(prep_score, cooking_score, slicing_score, prep_section_score)
+        final_rating = self.calculate_final_rating(cooking_score, slicing_score, prep_section_score)
         print(f"\nFinal Rating for {order['name']}: {final_rating}")
