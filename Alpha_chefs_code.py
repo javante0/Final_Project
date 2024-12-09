@@ -160,11 +160,17 @@ class InputOutputHandler:
         return min(num_toppings, max_toppings_score)
 
     def cooking_system(self, cooking_time, ideal_time):
-        deviations = list(range(7))
-        score_map = {0: 5, 1: 4, 2: 4, 3: 3, 4: 3, 5: 2, 6: 2}
-        # One for me
-        cooking_score = score_map.get(min(deviations, key=lambda x: abs(cooking_time - ideal_time - x)), 1)
-        return cooking_score
+        time_diff = abs(cooking_time - ideal_time)
+        score_map = {
+            0: 5,
+            1: 4,
+            2: 4,
+            3: 3,
+            4: 3,
+            5: 2,
+            6: 2,
+        }
+        return score_map.get(time_diff, 1)
 
     def slicing_system(self, slices, preferred_slices):
         slice_diffs = {0: 5, 1: 4, 2: 3, 3: 2, 4: 1}
