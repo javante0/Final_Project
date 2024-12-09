@@ -161,15 +161,35 @@ def pizza_prep(order):
 
 
 class InputOutputHandler:
+    """
+    Handles input and output for the Pizza Game, scoring, and user interactions. Also asks if the player wants to play again.
+
+    Note: This class depends on outside components:
+    - pizza_prep() function (from John's code) for preparation scoring
+    - Customer class (from Dan's code) for order generation
+    """
     def __init__(self):
         self.customer_name = None
 
     def welcome_message(self):
+        """
+        Displays a welcome message to the player.
+
+        Side Effects:
+        - Prints a welcome message to the console
+        - Uses the customer's name stored in self.customer_name
+        """
         print("\nWelcome to the Pizza Game!")
         print(f"Hello, {self.customer_name}! Ready to show off your pizza skills?")
         time.sleep(2)
 
     def explain_rules(self):
+        """
+        Prints out the rules of the Game.
+
+        Side Effects:
+        Prints game rules to the console
+        """
         print("\n--- Game Rules ---")
         print("1. You will prepare a pizza by typing the requested ingredients as fast as you can.")
         print("2. After preparation, you will choose how long to cook the pizza.")
@@ -178,6 +198,16 @@ class InputOutputHandler:
         buffer = input("\nPress the enter key to continue.")
 
     def cooking_system(self, cooking_time, ideal_time):
+        """
+        Evaluates the cooking time against an ideal cooking time.
+
+        Args:
+            cooking_time (float): The time the user cooked the pizza
+            ideal_time (float): The recommended cooking time for the pizza
+
+        Returns:
+            int: A score between 1 and 5 based on how close the cooking time is to the ideal time
+        """
         time_diff = abs(cooking_time - ideal_time)
         score_map = {
             0: 5,
@@ -191,12 +221,35 @@ class InputOutputHandler:
         return score_map.get(time_diff, 1)
 
     def slicing_system(self, slices, preferred_slices):
+        """
+            Evaluates the number of pizza slices against preferred slice count.
+
+        Args:
+            slices (int): The number of slices the pizza was cut into
+            preferred_slices (int): The recommended number of slices
+
+        Returns:
+            int: A score between 1 and 5 based on how close the slice count is to the preferred number
+        """
         slice_diffs = {0: 5, 1: 4, 2: 3, 3: 2, 4: 1}
         slice_diff = abs(slices - preferred_slices)
         slicing_score = slice_diffs.get(slice_diff, 1)
         return slicing_score
 
     def calculate_final_rating(self, prep_score, cooking_score, slicing_score):
+        """
+        Calculates the overall pizza rating based on scores from different stages.
+
+        Arguments:
+            prep_score (int): Score for pizza preparation
+            cooking_score (int): Score for cooking time
+            slicing_score (int): Score for slicing
+            prep_section_score (int): Score from the pizza preparation section
+
+        Returns:
+            str: A rating of "Perfect", "Excellent", "Okay", "Bad", or "Terrible"
+                 based on the average of the input scores
+        """
         total_score = cooking_score + slicing_score + prep_score
         avg_score = total_score / 3
         return (
@@ -208,29 +261,42 @@ class InputOutputHandler:
         )
 
     def process_order(self, customer):
+        """
+        Processes a complete pizza order, managing all stages of pizza creation.
+
+        Arguments:
+            customer (Customer): A customer object from Dan's code with order generation capability
+
+        Dependencies:
+        - Requires pizza_prep() function from John's code
+        - Requires generate_order() method from Customer class
+
+        Side Effects:
+        - Prints order details, game instructions, and scores
+        - Takes user input for cooking time and slice count
+        - May use default values if user input is invalid
+        """
         order = customer.generate_order()
-        ideal_cooking_time = random.randint(8, 12)  # Randomize ideal cooking time
-        preferred_slices = random.randint(6, 12)  # Randomize ideal slice count
+        ideal_cooking_time = random.randint(8, 12) 
+        preferred_slices = random.randint(6, 12) 
 
         print(f"\nOrder Details: {customer}")
         print(f"Ideal cooking time: {ideal_cooking_time} minutes")
         print(f"Preferred number of slices: {preferred_slices}")
 
-        # Run pizza preparation
+        
         print("\nTime to prep the pizza!")
         prep_score = pizza_prep(order)
 
-        # Ask user for cooking time
+        
         try:
             cooking_time = float(input("How many minutes do you want to cook the pizza? "))
         except ValueError:
-            #If they fail to put a valid input, the default is 10 minutes
             print("Invalid input, using default cooking time (10 minutes).")
             cooking_time = 10.0
 
         cooking_score = self.cooking_system(cooking_time, ideal_cooking_time)
 
-        # slicing score
         try:
             slices = int(input("How many slices was the pizza cut into? "))
         except ValueError:
@@ -257,8 +323,28 @@ class InputOutputHandler:
         print(f"\nFinal Rating for {order['name']}: {final_score}/5 \
               \n{final_rating}!")
         
-    #this part sucked to firgure out
+
     def run(self, customer):
+        """
+            Runs the Game for a given customer, allowing multiple play-throughs. 
+        This method takes control of the game flow by:
+    1. Displaying a welcome message
+    2. Explaining game rules
+    3. Processing a pizza order
+    4. Allowing the user to play multiple times
+
+    Args:
+        customer (Customer): A Customer object representing the player
+
+    Side Effects:
+        - Prints welcome and rules messages
+        - Processes pizza orders
+        - Prompts user for continuation
+        - Prints final farewell message
+
+    Returns:
+        None
+        """
         self.welcome_message()
         self.explain_rules()
         play_again = True
@@ -275,10 +361,9 @@ def parse_args(arglist):
         parser.add_argument("name", type=str, help="Your name")
         return parser.parse_args(arglist)
 
-    #This part sucked even more as I testing it in juptyer notebook
+    
 if __name__ == "__main__":
 
-    # Parse command-line arguments
         args = parse_args(sys.argv[1:])
 
         customer = Customer(args.name)
