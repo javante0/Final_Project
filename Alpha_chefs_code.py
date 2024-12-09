@@ -1,11 +1,56 @@
 import argparse
-from collections import defaultdict
 import time
 import random
 import sys
 
 class Customer:
+    """
+    Represents a customer who orders customized pizzas. 
+
+    The class allows the creation of a customer object with a name and the ability to generate random pizza orders. 
+    It maintains an order history, manages probabilities for topping pairings, and provides a food ticket
+
+    Attributes:
+        name (str): customer name
+        order_history (list): A list of dictionaries, each representing an order with details such as crust, size, 
+            sauce, cheese, and toppings.
+        probability_chain (dict): A nested dictionary representing probabilities of topping pairs to affect probability of future toppings 
+        crust_options (list): Available crust types ('thin', 'thick', 'stuffed').
+        size_options (list): Available pizza sizes ('small', 'medium', 'large').
+        sauce_options (list): Available sauce options ('marinara', 'buffalo', 'barbeque', 'pesto').
+        cheese_options (list): Available cheese options ('mozzarella', 'cheddar', 'parmesan').
+        toppings (list): Available topping options ('pepperoni', 'mushroom', 'onion', 'olive', 'pineapple', 'sausage', 'bacon', 'anchovy', 'spinach').
+        
+    Methods:
+        __init__(name):
+            Initializes a Customer object with the given name and default attributes.
+
+        generate_order():
+            Generates a random pizza order, updates the topping probability chain, 
+            and appends the order to the customer's history.
+        
+        __str__():
+            Returns a string expression of the food ticket containing details about the pizza the customer ordered
+    """
     def __init__(self, name):
+        """
+        initializes a customer class with a specified name
+        
+        Args: 
+            name (str): name of the customer placing the order   
+        
+        Side Effects:
+            initializes the attributes below:
+            name (str): customer's name
+            order_history (list): An empty list to store the customer's order history.
+            probability_chain (dict): A nested dictionary initialized with equal probabilities for all topping pairs.
+            crust_options (list): A list of available crust types
+            size_options (list): A list of available pizza size
+            sauce_options (list): A list of available sauce options
+            cheese_options (list): A list of available cheese options
+            toppings (list): A list of available topping options
+        """
+        
         self.name = name
         self.order_history = []
         self.probability_chain = {}
@@ -20,6 +65,22 @@ class Customer:
                 self.probability_chain[topping][next_topping] = 1 / len(self.toppings)
 
     def generate_order(self):
+        """
+        Generates a random customer order of pizza (crust, cheese, toppings, cooktime) and then updates the possibility of next topping. 
+        
+        Args: None
+        
+        Returns:
+            str: The first value in the order dictionary when we iterate over the values. Utilizes fstrings in order to incorporate specific parts of the order in the returned strings
+            
+        
+        Side Effects:
+            Updates self.history by appending generated orders
+            Modifies self.probability_chain to update possibility of topping pairs based on previous generated orders
+        
+        Raises:
+            None
+        """  
         self.crust_type = random.choice(self.crust_options)
         self.size_type = random.choice(self.size_options)
         self.sauce_type = random.choice(self.sauce_options)
@@ -59,6 +120,17 @@ class Customer:
         return order
         
     def __str__(self):
+        """
+        returns the customer's order in the style of a food ticket. Has details regarding how to make the pizza for the chef.
+        
+        Args: None
+        
+        Returns: (dict) ticket: the values of the ticket dictionary 
+        
+        Side Effects: None
+        
+        Raises: None
+        """
         ticket = {
                 'separator1': "---------------------------------",
                 'name': f"{self.name}'s ORDER",
