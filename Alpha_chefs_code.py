@@ -174,7 +174,7 @@ def pizza_prep(order):
     total_items = 4 + len(order['toppings'])
     allowed_time = total_items * 2
     print(f"Type all ingredients in {allowed_time} seconds or less to receive a perfect score.")
-    print("Toppings should be seperated by commas. Capitilization does not matter.")
+    print("Toppings should be seperated by commas. Capitalization does not matter.")
     buffer = input("\nPress the enter key to continue.")
     print("Starting in 3...")
     time.sleep(1)

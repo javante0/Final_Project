@@ -29,13 +29,13 @@ The program will print out results for the preparation, cooking, and slicing por
 
 | Method/Function    | Author |  Techniques Demonstrated |
 -----------------------------------------------------------
-| pizza_prep| John |Comprehension|
+| pizza_prep| John |f-strings|
 
 | InputOutputHandler.calculate_final_rating | John |Conditional expression|
 
-| Customer.generate_order | Daniel | f-string |
+| Customer.generate_order | Daniel | Comprehension |
 
-| Customer.__str__  | Daniel | Magic method, f-string|
+| Customer.__str__  | Daniel | Magic method|
 
 | InputOutputHandler.run | Terrence | ArgumentParser|
 
