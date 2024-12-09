@@ -6,7 +6,7 @@ class InputOutputHandler:
     """
     Handles input and output for the Pizza Game, scoring, and user interactions.
 
-    Note: This class depends on external components:
+    Note: This class depends on external code:
     - pizza_prep() function (from John's code) for preparation scoring
     - Customer class (from Dan's code) for order generation
     """
@@ -119,7 +119,7 @@ class InputOutputHandler:
 
         Dependencies:
         - Requires pizza_prep() function from John's code
-        - Requires generate_order() method from Customer class
+        - Requires generate_order() method from Dan's customer class
 
         Side Effects:
         - Prints order details, game instructions, and scores
@@ -127,8 +127,8 @@ class InputOutputHandler:
         - May use default values if user input is invalid
         """
         order = customer.generate_order()
-        ideal_cooking_time = random.randint(8, 12)  # Randomize ideal cooking time
-        preferred_slices = random.randint(6, 12)  # Randomize ideal slice count
+        ideal_cooking_time = random.randint(8, 12) 
+        preferred_slices = random.randint(6, 12)  
 
         print(f"\nOrder Details: {customer}")
         print(f"Ideal cooking time: {ideal_cooking_time} minutes")
@@ -191,17 +191,19 @@ class InputOutputHandler:
                 print("\nThank you for playing our Pizza Game! See ya!")
 
     #This part sucked even more as I testing it in juptyer notebook
-if __name__ == "__main__":
-        # Standard argparse for command-line usage
-        #
+def parse_args(arglist):
+        """Parses command-line arguments for the Pizza Game."""
         parser = argparse.ArgumentParser(description="Pizza Game Input Handler")
         parser.add_argument("name", type=str, help="Your name")
-        args = parser.parse_args()
+        return parser.parse_args(arglist)
 
-        #Relies on the customer class in Dan's code
+if __name__ == "__main__":
+
+    # Parse command-line arguments
+        args = parse_args(sys.argv[1:])
+
         customer = Customer(args.name)
 
-    
         handler = InputOutputHandler()
         handler.customer_name = args.name
 
