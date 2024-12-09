@@ -2,29 +2,44 @@ How to run the game:
 
 Run the program using the following command:
 
-python Alpha_chefs_code.py.py (Any name here)
+python Alpha_chefs_code.py (Any name here)
 
 Purpose of each file:
 
-pizza_prep.py:
-This file contains the pizza_prep function, which has the pizza preparation phase of the game. The player is prompted to type the ingredients for the pizza (crust, size, sauce, cheese, and toppings). Their performance is scored based on the speed and accuracy of their inputs. The purpose is to gamify the preparation process by making it interactive and timed.
+Alpha_chefs_code.py:
+The main file for the pizza game.
 
-customer.py:
-This file defines the Customer class, which manages customer specific data, such as the name, order history, and generated orders. It also simulates random pizza orders by selecting crusts, sauces, cheeses, and toppings using probabilities. The purpose is to create dynamic and realistic pizza orders for the game.
+Ouputs of the program:
+crust_input: prompts the user to type in the order's crust
 
-input_output_handler.py:
-This file defines the InputOutputHandler class, which coordinates the flow of the game. It handles the user interface by displaying welcome messages, explaining the rules, and managing the cooking and slicing phases. It also calculates the final score based on the player’s performance in all stages. The purpose is to integrate all components of the game and provide a neat user experience.
+size_input: prompts the user to type in the order's size
+
+sauce_input: prompts the user to type in the order's sauce
+
+cheese_input: prompts the user to type in the order's cheese
+
+toppings_input: prompts the user to type in the order's topping/s. Each topping must be separated by a comma.
+
+cooking_time: prompts the user to enter the ideal cooking time that is listed on the order ticket
+
+slices: prompts the user to enter the preferred number of slices that is listed on the order ticket
+
+The program will print out results for the preparation, cooking, and slicing portions of the game. Each section will be scored out of 5, the higher score the better. At the end of the game, the user will be given a final score that is an average of all the scores from each section and a rating corresponding to the final score.
 
 
 | Method/Function    | Author |  Techniques Demonstrated |
 -----------------------------------------------------------
-| pizza_prep| John   |Comprehension|
+| pizza_prep| John |Comprehension|
 
-| Customer.__str__  | Daniel | Magic method, f-string|
+| InputOutputHandler.calculate_final_rating | John |Conditional expression|
+
+| Customer.generate_order | Daniel | f-string |
+
+| Customer.__str__  | Daniel | Magic method |
 
 | InputOutputHandler.run | Terrence | ArgumentParser|
 
 | InputOutputHandler.cooking_system | Terrence  | Optional parameters|
 
-| InputOutputHandler.calculate_final_rating | John |Conditional expression|
+
 
