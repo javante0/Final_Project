@@ -14,3 +14,13 @@ This file defines the Customer class, which manages customer specific data, such
 
 input_output_handler.py:
 This file defines the InputOutputHandler class, which coordinates the flow of the game. It handles the user interface by displaying welcome messages, explaining the rules, and managing the cooking and slicing phases. It also calculates the final score based on the player’s performance in all stages. The purpose is to integrate all components of the game and provide a neat user experience.
+
+
+| Method/Function    | Author |  Techniques Demonstrated |
+-----------------------------------------------------------
+| pizza_prep| John   |Comprehension|
+| Customer.__str__  | Daniel | Magic method, f-string|
+| InputOutputHandler.run | Terrence | ArgumentParser|
+| InputOutputHandler.cooking_system | Terrence  | Optional parameters|
+| InputOutputHandler.calculate_final_rating | John |Conditional expression|
+
