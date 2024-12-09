@@ -5,7 +5,7 @@ import sys
 
 class Customer:
     """
-    Primary Author:: Daniel
+    Primary Author: Daniel
     
     Represents a customer who orders customized pizzas. 
 
@@ -71,7 +71,7 @@ class Customer:
     def generate_order(self):
         """
         Primary Author: Daniel
-        Technique Used: F-String
+        Technique Used: Comprehension
         
         Generates a random customer order of pizza (crust, cheese, toppings, cooktime) and then updates the possibility of next topping. 
         
@@ -158,6 +158,9 @@ class Customer:
 
 def pizza_prep(order):
     """
+    Primary Author: John
+    Technique Used: F-strings
+
     Mechanism that allows takes a customer's order and prompts the user to type the ingredients included
     in the order. The user's score for this portion is calculated based on how quickly they type all
     ingredients and how accurately they type each ingredient.
@@ -321,6 +324,9 @@ class InputOutputHandler:
 
     def calculate_final_rating(self, prep_score, cooking_score, slicing_score):
         """
+        Primary Author: John
+        Technique Used: Conditional expressions
+        
         Calculates the overall pizza rating based on scores from different stages.
 
         Arguments:
