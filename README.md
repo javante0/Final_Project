@@ -35,7 +35,7 @@ The program will print out results for the preparation, cooking, and slicing por
 
 | Customer.generate_order | Daniel | f-string |
 
-| Customer.__str__  | Daniel | Magic method |
+| Customer.__str__  | Daniel | Magic method, f-string|
 
 | InputOutputHandler.run | Terrence | ArgumentParser|
 
