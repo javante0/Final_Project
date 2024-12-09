@@ -19,8 +19,12 @@ This file defines the InputOutputHandler class, which coordinates the flow of th
 | Method/Function    | Author |  Techniques Demonstrated |
 -----------------------------------------------------------
 | pizza_prep| John   |Comprehension|
+
 | Customer.__str__  | Daniel | Magic method, f-string|
+
 | InputOutputHandler.run | Terrence | ArgumentParser|
+
 | InputOutputHandler.cooking_system | Terrence  | Optional parameters|
+
 | InputOutputHandler.calculate_final_rating | John |Conditional expression|
 
