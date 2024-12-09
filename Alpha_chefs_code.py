@@ -290,6 +290,7 @@ class InputOutputHandler:
     def cooking_system(self, cooking_time, ideal_time):
         """
         Primary Author:Terrence
+        Technique: Optional parameter(ideal_time)
         Evaluates the cooking time against an ideal cooking time.
 
         Args:
@@ -314,6 +315,7 @@ class InputOutputHandler:
     def slicing_system(self, slices, preferred_slices):
         """
         Primary Author:Terrence
+        Technique: Optional parameter(preferred_slices)
             Evaluates the number of pizza slices against preferred slice count.
 
         Args:
