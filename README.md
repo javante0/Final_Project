@@ -20,7 +20,9 @@ This file defines the InputOutputHandler class, which coordinates the flow of th
 -----------------------------------------------------------
 | pizza_prep| John   |Comprehension|
 
-| Customer.__str__  | Daniel | Magic method, f-string|
+| generate_order | Daniel | f-string|
+
+| __str__ | Daniel | Magic Method |
 
 | InputOutputHandler.run | Terrence | ArgumentParser|
 
