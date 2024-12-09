@@ -5,6 +5,8 @@ import sys
 
 class Customer:
     """
+    Primary Author:: Daniel
+    
     Represents a customer who orders customized pizzas. 
 
     The class allows the creation of a customer object with a name and the ability to generate random pizza orders. 
@@ -34,6 +36,8 @@ class Customer:
     """
     def __init__(self, name):
         """
+        Primary Author: Daniel 
+        
         initializes a customer class with a specified name
         
         Args: 
@@ -66,6 +70,9 @@ class Customer:
 
     def generate_order(self):
         """
+        Primary Author: Daniel
+        Technique Used: F-String
+        
         Generates a random customer order of pizza (crust, cheese, toppings, cooktime) and then updates the possibility of next topping. 
         
         Args: None
@@ -121,6 +128,9 @@ class Customer:
         
     def __str__(self):
         """
+        Primary Author: Daniel
+        Technique Used: Magic Method
+        
         returns the customer's order in the style of a food ticket. Has details regarding how to make the pizza for the chef.
         
         Args: None
